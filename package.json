@@ -2,7 +2,7 @@
   "name": "travalizit",
   "version": "0.0.0",
   "description": "Node.js Travis API",
-  "main": "lib/travis.js",
+  "main": "./lib/travis.js",
   "directories": {
     "test": "test"
   },
@@ -22,5 +22,11 @@
   "gitHead": "24dc6629ac94c092d2ea683d0717eb20451e23c5",
   "bugs": {
     "url": "https://github.com/stefanjudis/travalizit/issues"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.5.2",
+    "grunt-contrib-watch": "~0.4.3",
+    "grunt-contrib-nodeunit": "~0.1.2"
   }
 }
