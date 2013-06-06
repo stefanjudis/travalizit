@@ -1,0 +1,26 @@
+{
+  "name": "travalizit",
+  "version": "0.0.0",
+  "description": "Node.js Travis API",
+  "main": "lib/travis.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "npm test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/stefanjudis/travalizit.git"
+  },
+  "keywords": [
+    "travis"
+  ],
+  "author": "Stefan Judis",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "24dc6629ac94c092d2ea683d0717eb20451e23c5",
+  "bugs": {
+    "url": "https://github.com/stefanjudis/travalizit/issues"
+  }
+}
