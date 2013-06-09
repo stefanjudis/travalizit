@@ -8,7 +8,7 @@ module.exports = function(grunt) {
 
 
     jshint : {
-      all : [ 
+      all : [
         'Gruntfile.js',
         'lib/**/*.js',
         'assets/js/collections/*.js',
