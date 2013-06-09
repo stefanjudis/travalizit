@@ -30,6 +30,7 @@ module.exports = {
       var t = new this.Travalizit(),
           options = t.getOptions();
 
+      test.strictEqual(typeof options, 'object');
       test.strictEqual(Object.keys(options).length, 1);
       test.strictEqual(options.host, 'https://api.travis-ci.org/');
 
