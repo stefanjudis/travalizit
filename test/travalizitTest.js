@@ -26,7 +26,9 @@ module.exports = {
 
   builds : function( test  ) {
     var t = this.Travalizit,
-        repos = new t.builds( '123456' );
+        repos = new t.builds( {
+      repoId : '123456'
+    } );
 
     test.strictEqual( repos instanceof require( '../lib/builds' ), true );
     test.done();
