@@ -15,7 +15,7 @@ module.exports = {
   },
 
 
-  constructor : function( test ) {
+  init : function( test ) {
     var t = this.travalizit;
 
     test.strictEqual( typeof t, 'object' );
