@@ -16,18 +16,18 @@ Builds API
 
 
 
-### create a new travalizit builds object
+### create a new builds object
 
 **Description:** Create a new travalizit builds object.
 
 ```
-var Travalizit = require( 'travalizit' ),
-    builds = new Travalizit.builds();
+var travalizit = require( 'travalizit' ),
+    builds = new travalizit.Builds();
 ```
 
 ```
-var Travalizit = require( 'travalizit' ),
-    builds = new Travalizit.builds( options );
+var travalizit = require( 'travalizit' ),
+    builds = new travalizit.Builds( options );
 ```
 **options:** config options object **[ default: {} ]**
 
@@ -36,7 +36,7 @@ var Travalizit = require( 'travalizit' ),
 **options.repoId:** Set a repository id to retrieve only information about a given repository **[ default: '' ]**
 
 ```
-builds = new Travalizit.builds( {
+builds = new travalizit.Builds( {
   repoId : '123456'
 } );
 ```

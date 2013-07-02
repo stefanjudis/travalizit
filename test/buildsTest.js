@@ -2,7 +2,7 @@
 
 module.exports = {
   setUp : function( callback ) {
-    this.Travalizit = require( '../lib/travalizit' );
+    this.travalizit = require( '../lib/travalizit' );
     this.request    = require( 'request' );
 
     callback();
@@ -15,7 +15,7 @@ module.exports = {
 
 
   init : function( test ) {
-    var builds = new this.Travalizit.builds();
+    var builds = new this.travalizit.Builds();
 
     test.strictEqual( typeof builds, 'object' );
 
@@ -24,7 +24,7 @@ module.exports = {
 
   all : {
     repoIsDefined : function( test ) {
-      var builds = new this.Travalizit.builds( {
+      var builds = new this.travalizit.Builds( {
         repoId : '510697'
       } ),
           request = this.request,
@@ -51,7 +51,7 @@ module.exports = {
       this.request = request;
     },
     repoIsUndefined : function( test ) {
-      var builds = new this.Travalizit.builds( {
+      var builds = new this.travalizit.Builds( {
         repoId : ''
       } ),
           request = this.request,

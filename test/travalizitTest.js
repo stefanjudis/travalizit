@@ -2,7 +2,7 @@
 
 module.exports = {
   setUp: function( callback ) {
-    this.Travalizit = require( '../lib/travalizit' );
+    this.travalizit = require( '../lib/travalizit' );
 
     callback();
   },
@@ -16,7 +16,7 @@ module.exports = {
 
 
   constructor : function( test ) {
-    var t = this.Travalizit;
+    var t = this.travalizit;
 
     test.strictEqual( typeof t, 'object' );
 
@@ -25,8 +25,8 @@ module.exports = {
 
 
   builds : function( test  ) {
-    var t = this.Travalizit,
-        repos = new t.builds( {
+    var t = this.travalizit,
+        repos = new t.Builds( {
       repoId : '123456'
     } );
 
