@@ -15,7 +15,7 @@ module.exports = {
 
 
   constructor : function( test ) {
-    var builds = new this.travalizit.Builds();
+    var builds = this.travalizit.Builds();
 
     test.strictEqual( typeof builds, 'object' );
 
@@ -51,7 +51,7 @@ module.exports = {
       this.request = request;
     },
     repoIsUndefined : function( test ) {
-      var builds = new this.travalizit.Builds( {
+      var builds = this.travalizit.Builds( {
         repoId : ''
       } ),
           request = this.request,

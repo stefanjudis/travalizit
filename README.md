@@ -22,12 +22,12 @@ Builds API
 
 ```
 var travalizit = require( 'travalizit' ),
-    builds = new travalizit.Builds();
+    builds = ravalizit.Builds();
 ```
 
 ```
 var travalizit = require( 'travalizit' ),
-    builds = new travalizit.Builds( options );
+    builds = travalizit.Builds( options );
 ```
 **options:** config options object **[ default: {} ]**
 
@@ -36,7 +36,7 @@ var travalizit = require( 'travalizit' ),
 **options.repoId:** Set a repository id to retrieve only information about a given repository **[ default: '' ]**
 
 ```
-builds = new travalizit.Builds( {
+builds = travalizit.Builds( {
   repoId : '123456'
 } );
 ```

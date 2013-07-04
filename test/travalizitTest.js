@@ -26,7 +26,7 @@ module.exports = {
 
   builds : function( test  ) {
     var t = this.travalizit,
-        repos = new t.Builds( {
+        repos = t.Builds( {
       repoId : '123456'
     } );
 
