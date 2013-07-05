@@ -121,9 +121,9 @@ module.exports = {
             name  : 'travalizit',
             host  : 'http://abc.de/'
           } ),
-            callback          = function() {},
-            get               = this.request,
-            makeBuildsRequest = builds._makeBuildsRequest;
+            callback      = function() {},
+            get           = this.request,
+            getBuildsById = builds._getBuildsById;
 
         this.request.get = function() {
           test.strictEqual( arguments.length, 2 );
@@ -137,7 +137,7 @@ module.exports = {
           arguments[ 1 ]( null, {}, [ { id: '123456' } ] );
         };
 
-        builds._makeBuildsRequest = function() {
+        builds._getBuildsById = function() {
           test.strictEqual( arguments.length, 2 );
 
           test.strictEqual( arguments[ 0 ], '123456' );
@@ -149,7 +149,7 @@ module.exports = {
         builds._getBuildsByOwnerAndName( 'stefanjudis', 'travalizit', callback );
 
         this.request.get = get;
-        builds._makeBuildsRequest = makeBuildsRequest;
+        builds._getBuildsById = getBuildsById;
       },
       noIdFound : function( test ) {
         var builds = this.travalizit.Builds( {
