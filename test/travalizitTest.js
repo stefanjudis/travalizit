@@ -24,13 +24,43 @@ module.exports = {
   },
 
 
-  builds : function( test  ) {
-    var t = this.travalizit,
-        repos = t.Builds( {
-      repoId : '123456'
-    } );
+  builds : {
+    validInput : {
+      repoIdIsIncluded : function( test  ) {
+        var t = this.travalizit,
+            repos = t.Builds( {
+          repoId : '123456'
+        } );
 
-    test.strictEqual( repos instanceof require( '../lib/builds' ), true );
-    test.done();
-  },
+        test.strictEqual( repos instanceof require( '../lib/builds' ), true );
+        test.done();
+      },
+      repoOwnerAndNameAreIncluded : function( test  ) {
+        var t = this.travalizit,
+            repos = t.Builds( {
+          owner : 'stefanjudis',
+          name  : 'travalizit'
+        } );
+
+        test.strictEqual( repos instanceof require( '../lib/builds' ), true );
+        test.done();
+      }
+    },
+    invalidInput : {
+      optionAreNotDefined : function( test ) {
+        var t = this.travalizit,
+            repos = t.Builds();
+
+        test.strictEqual( repos, false );
+        test.done();
+      },
+      optionsAreEmptyObject : function( test ) {
+        var t = this.travalizit,
+            repos = t.Builds( {} );
+
+        test.strictEqual( repos, false );
+        test.done();
+      }
+    }
+  }
 };

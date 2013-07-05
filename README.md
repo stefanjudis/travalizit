@@ -18,7 +18,7 @@ Builds API
 
 ### create a new builds object
 
-**Description:** Create a new travalizit builds object.
+**Description:** Create a new travalizit builds object. Make sure you set either repoId or name and owner, if not the return will be false.
 
 ```
 var travalizit = require( 'travalizit' ),
@@ -34,7 +34,12 @@ var travalizit = require( 'travalizit' ),
 
 **options.host -** Change the travis API host, if you want **[ default: 'https://api.travis-ci.org/' ]**
 
-**options.repoId -** Set a repository id to retrieve only information about a given repository **[ default: '' ]**
+**options.repoId -** Set a repository id to retrieve information about it **[ default: undefined ]**
+
+**options.owner -** Set the repository owner to retrieve information about it **[ default: undefined ]**
+
+**options.name -** Set the repository name to retrieve information about it **[ default: undefined ]**
+
 
 *Example:*
 
@@ -42,6 +47,17 @@ var travalizit = require( 'travalizit' ),
 builds = travalizit.Builds( {
   repoId : '123456'
 } );
+```
+
+```
+builds = travalizit.Builds( {
+  owner : 'stefanjudis',
+  name  : 'travalizit
+} );
+```
+
+```
+builds = travalizit.Builds( {} ); // false
 ```
 
 ### fetch builds
@@ -57,7 +73,7 @@ builds.all( callback );
 *Example:*
 
 ```
-builds.all( function( error, response boddy ) {
+builds.all( function( error, response, body ) {
   // do something here
 } );
 ```
