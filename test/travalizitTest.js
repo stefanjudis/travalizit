@@ -27,7 +27,7 @@ module.exports = {
   builds : {
     validInput : {
       repoIdIsIncluded : function( test  ) {
-        var t = this.travalizit,
+        var t     = this.travalizit,
             repos = t.Builds( {
           repoId : '123456'
         } );
@@ -36,7 +36,7 @@ module.exports = {
         test.done();
       },
       repoOwnerAndNameAreIncluded : function( test  ) {
-        var t = this.travalizit,
+        var t     = this.travalizit,
             repos = t.Builds( {
           owner : 'stefanjudis',
           name  : 'travalizit'
@@ -48,17 +48,58 @@ module.exports = {
     },
     invalidInput : {
       optionAreNotDefined : function( test ) {
-        var t = this.travalizit,
+        var t     = this.travalizit,
             repos = t.Builds();
 
         test.strictEqual( repos, false );
         test.done();
       },
       optionsAreEmptyObject : function( test ) {
-        var t = this.travalizit,
+        var t     = this.travalizit,
             repos = t.Builds( {} );
 
         test.strictEqual( repos, false );
+        test.done();
+      }
+    }
+  },
+
+
+  jobs : {
+    validInput : {
+      repoIdIsIncluded : function( test  ) {
+        var t    = this.travalizit,
+            jobs = t.Jobs( {
+          repoId : '123456'
+        } );
+
+        test.strictEqual( jobs instanceof require( '../lib/jobs' ), true );
+        test.done();
+      },
+      repoOwnerAndNameAreIncluded : function( test  ) {
+        var t     = this.travalizit,
+            jobs  = t.Jobs( {
+          owner : 'stefanjudis',
+          name  : 'travalizit'
+        } );
+
+        test.strictEqual( jobs instanceof require( '../lib/jobs' ), true );
+        test.done();
+      }
+    },
+    invalidInput : {
+      optionAreNotDefined : function( test ) {
+        var t     = this.travalizit,
+            jobs  = t.Builds();
+
+        test.strictEqual( jobs, false );
+        test.done();
+      },
+      optionsAreEmptyObject : function( test ) {
+        var t     = this.travalizit,
+            jobs  = t.Builds( {} );
+
+        test.strictEqual( jobs, false );
         test.done();
       }
     }
