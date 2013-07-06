@@ -21,9 +21,9 @@ module.exports = {
         repoId : '510697'
       } ),
           callback      = function() {},
-          getBuildsById = builds._getBuildsById;
+          getBuildsById = builds._getBuildsByRepoId;
 
-      builds._getBuildsById = function() {
+      builds._getBuildsByRepoId = function() {
         test.strictEqual( arguments.length, 2 );
         test.strictEqual( arguments[ 0 ], '510697' );
         test.strictEqual( arguments[ 1 ], callback );
@@ -33,7 +33,7 @@ module.exports = {
 
       builds.all( callback );
 
-      builds._getBuildsById = getBuildsById;
+      builds._getBuildsByRepoId = getBuildsById;
     },
     ownerAndNameAreDefined : function( test ) {
       var builds = this.travalizit.Builds( {
@@ -65,6 +65,53 @@ module.exports = {
   },
 
 
+  get : {
+    inputIsId : function( test ) {
+      var builds = this.travalizit.Builds( {
+        repoId : '123456',
+        host   : 'http://abc.de/'
+      } ),
+          callback      = function() {},
+          getBuildById = builds._getBuildById;
+
+      builds._getBuildById = function() {
+        test.strictEqual( arguments.length, 2 );
+
+        test.strictEqual( arguments[ 0 ], '12345' );
+
+        test.strictEqual( arguments[ 1 ], callback );
+        test.done();
+      };
+
+      builds.get( '12345', callback );
+
+      builds._getBuildById = getBuildById;
+    },
+    inputIsArrayOfIds : function( test ) {
+      var builds = this.travalizit.Builds( {
+        repoId : '123456',
+        host   : 'http://abc.de/'
+      } ),
+          callback       = function() {},
+          getBuildsByIds = builds._getBuildsByIds,
+          buildIds       = [ '12345', '23456' ];
+
+      builds._getBuildsByIds = function() {
+        test.strictEqual( arguments.length, 2 );
+
+        test.strictEqual( arguments[ 0 ], buildIds );
+
+        test.strictEqual( arguments[ 1 ], callback );
+        test.done();
+      };
+
+      builds.get( buildIds, callback );
+
+      builds._getBuildsByIds = getBuildsByIds;
+    }
+  },
+
+
   getBuildsById : function( test ) {
     var builds = this.travalizit.Builds( {
         repoId : '123456',
@@ -86,7 +133,7 @@ module.exports = {
       test.done();
     };
 
-    builds._getBuildsById( '123456', callback );
+    builds._getBuildsByRepoId( '123456', callback );
 
     this.request.get = get;
   }
