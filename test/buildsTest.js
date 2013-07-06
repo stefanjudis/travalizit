@@ -316,5 +316,28 @@ module.exports = {
     builds._getBuildsByRepoId( '123456', callback );
 
     this.request.get = get;
+  },
+
+
+  sendBuilds : {
+    allBuildsAreFetched : function( test ) {
+      var builds = this.travalizit.Builds( {
+        repoId : '123456',
+        host   : 'http://abc.de/'
+      } ),
+          buildIds = [ '123456', '234567' ],
+          callback = function() {
+            test.strictEqual( arguments.length, 2 );
+
+            test.strictEqual( arguments[ 0 ], null );
+
+            test.strictEqual( arguments[ 1 ], responseArray );
+
+            test.done();
+          },
+          responseArray = [ 'something', 'somethingElse' ];
+
+      builds._sendBuilds( responseArray, buildIds, callback );
+    }
   }
 };
