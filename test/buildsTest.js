@@ -124,17 +124,71 @@ module.exports = {
       test.strictEqual( arguments.length, 2 );
 
       test.strictEqual( typeof arguments[ 0 ], 'object' );
-      test.strictEqual( arguments[ 0 ].url, 'http://abc.de/builds' );
-      test.strictEqual( arguments[ 0 ].qs.event_type, 'push' );
-      test.strictEqual( arguments[ 0 ].qs.repository_id, '123456' );
+      test.strictEqual( arguments[ 0 ].url, 'http://abc.de/builds/123456' );
+      test.strictEqual( arguments[ 0 ].json, true );
 
-      test.strictEqual( arguments[ 1 ], callback );
+      test.strictEqual( arguments[ 1 ].length, 3 );
 
       test.done();
     };
 
-    builds._getBuildsByRepoId( '123456', callback );
+    builds._getBuildById( '123456', callback );
 
     this.request.get = get;
+  },
+
+
+  getBuildByIdCallback : {
+    errorAppeared : function( test ) {
+      var builds = this.travalizit.Builds( {
+          repoId : '123456',
+          host   : 'http://abc.de/'
+        } ),
+          callback = function() {
+            test.strictEqual( arguments.length, 1 );
+
+            test.strictEqual( arguments[ 0 ], error );
+
+            test.done();
+          },
+          error = {
+            code    : 'SOME ERROR',
+            message : 'some error appeared'
+          }
+
+      builds._getBuildByIdCallback( error, null, null, callback );
+    },
+    noErrorAppeared : function( test ) {
+      var builds = this.travalizit.Builds( {
+          repoId : '123456',
+          host   : 'http://abc.de/'
+        } ),
+          callback = function() {
+            test.strictEqual( arguments.length, 3 );
+
+            test.strictEqual( arguments[ 0 ], null );
+
+            test.strictEqual( typeof arguments[ 1 ], 'object' );
+            test.strictEqual( Object.keys( arguments[ 1 ] ).length, 1 );
+            test.strictEqual( arguments[ 1 ][ '123456' ].id, '123456' );
+            test.strictEqual( arguments[ 1 ][ '123456' ].someData, 'someData' );
+
+            test.strictEqual( arguments[ 2 ], '123456' );
+
+            test.done();
+          };
+
+      builds._getBuildByIdCallback(
+        null,
+        {},
+        {
+          build : {
+            id       : '123456',
+            someData : 'someData'
+          }
+        },
+        callback
+      );
+    }
   }
 };
