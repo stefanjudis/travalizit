@@ -190,5 +190,103 @@ module.exports = {
         callback
       );
     }
+  },
+
+
+  getBuildsByIds : function( test ) {
+    var builds = this.travalizit.Builds( {
+      repoId : '123456',
+      host   : 'http://abc.de/'
+    } ),
+        buildIds     = [ '123456', '234567' ],
+        callback     = function() {},
+        count        = 0,
+        getBuildById = builds._getBuildById;
+
+    builds._getBuildById = function() {
+      test.strictEqual( arguments.length, 2 );
+
+      test.strictEqual( arguments[ 0 ], buildIds[ count ] );
+
+      test.strictEqual( arguments[ 1 ].length, 3 );
+
+      count++;
+
+      if ( count === buildIds.length ) {
+        test.done();
+      }
+    };
+
+    builds._getBuildsByIds( buildIds, callback );
+
+    builds._getBuildById = getBuildById;
+  },
+
+
+  getBuildsByIdLoopCallback : {
+    errorAppeared : function( test ) {
+      var builds = this.travalizit.Builds( {
+        repoId : '123456',
+        host   : 'http://abc.de/'
+      } ),
+          callback = function() {
+            test.strictEqual( arguments.length, 1 );
+
+            test.strictEqual( arguments[ 0 ], error );
+
+            test.done();
+          },
+          error    = {
+        code    : 'SOME CODE',
+        message : 'some message'
+      };
+
+      builds._getBuildsByIdsLoopCallback(
+        error,
+        null,
+        null,
+        null,
+        null,
+        callback
+      );
+    },
+    noErrorAppeared : function( test ) {
+      var builds = this.travalizit.Builds( {
+        repoId : '123456',
+        host   : 'http://abc.de/'
+      } ),
+          callback      = function() {},
+          eventEmitter  = {
+        emit : function() {
+          test.strictEqual( arguments.length, 4 );
+
+          test.strictEqual( arguments[ 0 ], 'buildFetched' );
+
+          test.strictEqual( arguments[ 1 ] instanceof Array, true );
+          test.strictEqual( arguments[ 1 ].length, 1 );
+          test.strictEqual( arguments[ 1 ][ 0 ].someData, 'someData' );
+
+          test.strictEqual( arguments[ 2 ], '123456' );
+
+          test.strictEqual( arguments[ 3 ], callback );
+
+          test.done();
+        }
+      },
+          responseArray = [];
+
+      builds._getBuildsByIdsLoopCallback(
+        null,
+        {
+          123456 : {
+            someData : 'someData'
+          }
+        },
+        '123456',
+        responseArray,
+        eventEmitter,
+        callback
+      );
+    }
   }
 };
