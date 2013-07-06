@@ -208,7 +208,7 @@ module.exports = {
 
       test.strictEqual( arguments[ 0 ], buildIds[ count ] );
 
-      test.strictEqual( arguments[ 1 ].length, 3 );
+      test.strictEqual( arguments[ 1 ].length, 2 );
 
       count++;
 
@@ -288,5 +288,33 @@ module.exports = {
         callback
       );
     }
+  },
+
+
+  getBuildsByRepoId : function( test ) {
+    var builds = this.travalizit.Builds( {
+      repoId : '123456',
+      host   : 'http://abc.de/'
+    } ),
+        callback = function() {},
+        get      = this.request.get;
+
+    this.request.get = function() {
+      test.strictEqual( arguments.length, 2 );
+
+      test.strictEqual( typeof arguments[ 0 ], 'object' );
+      test.strictEqual( arguments[ 0 ].json, true );
+      test.strictEqual( arguments[ 0 ].qs.event_type, 'push' );
+      test.strictEqual( arguments[ 0 ].qs.repository_id, '123456' );
+      test.strictEqual( arguments[ 0 ].url, 'http://abc.de/builds' );
+
+      test.strictEqual( arguments[ 1 ], callback );
+
+      test.done();
+    };
+
+    builds._getBuildsByRepoId( '123456', callback );
+
+    this.request.get = get;
   }
 };
