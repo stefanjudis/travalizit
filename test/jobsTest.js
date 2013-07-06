@@ -142,5 +142,32 @@ module.exports = {
         jobs._getJobsById = getJobsById;
       }
     }
+  },
+
+
+  getJobById : function( test ) {
+    var jobs = new this.travalizit.Jobs( {
+      repoId : '123456'
+    } ),
+        callback = function() {},
+        get      = this.request.get;
+
+    this.request.get = function() {
+      test.strictEqual( arguments.length, 2 );
+
+      test.strictEqual( typeof arguments[ 0 ], 'object' );
+      test.strictEqual( arguments[ 0 ].json, true );
+      test.strictEqual(
+        arguments[ 0 ].url, 'https://api.travis-ci.org/jobs/123456'
+      );
+
+      test.strictEqual( arguments[ 1 ], callback );
+
+      test.done();
+    }
+
+    jobs._getJobById( '123456', callback );
+
+    this.request.get = get;
   }
 };
