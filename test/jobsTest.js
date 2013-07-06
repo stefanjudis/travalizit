@@ -69,5 +69,78 @@ module.exports = {
 
       this.helper.getRepoId = getRepoId;
     }
+  },
+
+
+  getExecutive : {
+    jobsOrTypeIsAnArray : function( test ) {
+      var jobs = new this.travalizit.Jobs( {
+        repoId : '123456'
+      } ),
+          buildsOrCallback = function() {},
+          getJobsById      = jobs._getJobsById,
+          jobsOrType       = [ '123456', '234567' ];
+
+      jobs._getJobsById = function() {
+        test.strictEqual( arguments.length, 2 );
+
+        test.strictEqual( arguments[ 0 ], jobsOrType );
+
+        test.strictEqual( arguments[ 1 ], buildsOrCallback );
+
+        test.done();
+      };
+
+      jobs._get( jobsOrType, buildsOrCallback );
+
+      jobs._getJobsById = getJobsById;
+    },
+    jobsOrTypeIsAString : {
+      stringIsBuild : function( test ) {
+        var jobs = new this.travalizit.Jobs( {
+          repoId : '123456'
+        } ),
+            buildsOrCallback = [ '123456', '234567' ],
+            getJobsByBuildId = jobs._getJobsByBuildId,
+            jobsOrType       = 'builds',
+            callback         = function() {};
+
+        jobs._getJobsByBuildId = function() {
+          test.strictEqual( arguments.length, 2 );
+
+          test.strictEqual( arguments[ 0 ], buildsOrCallback );
+
+          test.strictEqual( arguments[ 1 ], callback );
+
+          test.done();
+        };
+
+        jobs.get( jobsOrType, buildsOrCallback, callback );
+
+        jobs._getJobsByBuildId = getJobsByBuildId;
+      },
+      stringIsId : function( test ) {
+        var jobs = new this.travalizit.Jobs( {
+          repoId : '123456'
+        } ),
+            buildsOrCallback = function() {},
+            getJobsById      = jobs._getJobsById,
+            jobsOrType       = '123456';
+
+        jobs._getJobsById = function() {
+          test.strictEqual( arguments.length, 2 );
+
+          test.strictEqual( arguments[ 0 ], '123456' );
+
+          test.strictEqual( arguments[ 1 ], buildsOrCallback );
+
+          test.done();
+        };
+
+        jobs.get( jobsOrType, buildsOrCallback );
+
+        jobs._getJobsById = getJobsById;
+      }
+    }
   }
 };
