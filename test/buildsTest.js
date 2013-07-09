@@ -112,7 +112,7 @@ module.exports = {
   },
 
 
-  getBuildsById : function( test ) {
+  getBuildById : function( test ) {
     var builds = this.travalizit.Builds( {
         repoId : '123456',
         host   : 'http://abc.de/'
@@ -158,37 +158,64 @@ module.exports = {
 
       builds._getBuildByIdCallback( error, null, null, callback );
     },
-    noErrorAppeared : function( test ) {
-      var builds = this.travalizit.Builds( {
-          repoId : '123456',
-          host   : 'http://abc.de/'
-        } ),
-          callback = function() {
-            test.strictEqual( arguments.length, 3 );
+    noErrorAppeared : {
+      responseBodyWasDefinedAndIncludedBuild : function( test ) {
+        var builds = this.travalizit.Builds( {
+            repoId : '123456',
+            host   : 'http://abc.de/'
+          } ),
+            callback = function() {
+              test.strictEqual( arguments.length, 3 );
 
-            test.strictEqual( arguments[ 0 ], null );
+              test.strictEqual( arguments[ 0 ], null );
 
-            test.strictEqual( typeof arguments[ 1 ], 'object' );
-            test.strictEqual( Object.keys( arguments[ 1 ] ).length, 1 );
-            test.strictEqual( arguments[ 1 ][ '123456' ].id, '123456' );
-            test.strictEqual( arguments[ 1 ][ '123456' ].someData, 'someData' );
+              test.strictEqual( typeof arguments[ 1 ], 'object' );
+              test.strictEqual( Object.keys( arguments[ 1 ] ).length, 1 );
+              test.strictEqual( arguments[ 1 ][ '123456' ].id, '123456' );
+              test.strictEqual( arguments[ 1 ][ '123456' ].someData, 'someData' );
 
-            test.strictEqual( arguments[ 2 ], '123456' );
+              test.strictEqual( arguments[ 2 ], '123456' );
 
-            test.done();
-          };
+              test.done();
+            };
 
-      builds._getBuildByIdCallback(
-        null,
-        {},
-        {
-          build : {
-            id       : '123456',
-            someData : 'someData'
-          }
-        },
-        callback
-      );
+        builds._getBuildByIdCallback(
+          null,
+          {},
+          {
+            build : {
+              id       : '123456',
+              someData : 'someData'
+            }
+          },
+          callback
+        );
+      },
+      responseBodyWasDefinedButNoIncludedBuild : function( test ) {
+        var builds = this.travalizit.Builds( {
+            repoId : '123456',
+            host   : 'http://abc.de/'
+          } ),
+            callback = function() {
+              test.strictEqual( arguments.length, 3 );
+
+              test.strictEqual( arguments[ 0 ], null );
+
+              test.strictEqual( typeof arguments[ 1 ], 'object' );
+              test.strictEqual( Object.keys( arguments[ 1 ] ).length, 0 );
+
+              test.strictEqual( arguments[ 2 ], undefined );
+
+              test.done();
+            };
+
+        builds._getBuildByIdCallback(
+          null,
+          {},
+          {},
+          callback
+        );
+      }
     }
   },
 
