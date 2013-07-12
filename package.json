@@ -1,6 +1,6 @@
 {
   "name": "travalizit",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Node.js Travis API",
   "main": "./lib/travalizit.js",
   "directories": {
